@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Weather Dashboard</title>
 
-    <link ref='stylesheet' href='assets/style.css'/>
+    <link ref='stylesheet' href='/assets/style.css'/>
 
     <link
       rel="stylesheet"
@@ -15,32 +15,112 @@
       crossorigin="anonymous"
     />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
+
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
 </head>
 <body>
         <nav class="navbar navbar-dark bg-dark text-white">
-            <h1> Weather Dashboard </h1>
+            <h1 class="text-center"> Weather Dashboard </h1>
         </nav>
 
-        <div class='container'>
-            <div class='row'>
-                <div class="col-lg-4 col-sm-8 col-xs-12 mx-auto">
+        <div class='container-fluid'>
+            <div class='row border'> 
+                <div id='#search' class='col-lg-4 bg-light border'>
+                    <h5> Search for a City: </h5>
+                    <form class="example" action="action_page.php">
+                        <input type="text" name="Search">
+                        <button id='searchButton' type="submit"><i class="fa fa-search"></i></button>
+                    </form>
 
+                    <br>
+
+                    <div class='row px-3 py-2 border city'>
+                        <h5 class='font-weight-light'> Austin </h5>
+                    </div>
+                    <div class='row px-3 py-2 border city '>
+                        <h5 class='font-weight-light'> Chicago </h5>   
+                    </div>
+                    <div class='row px-3 py-2 border city' >
+                        <h5 class='font-weight-light'> New York </h5>
+                    </div>
+                    <div class='row px-3 py-2 border city'>
+                        <h5 class='font-weight-light'> Orlando </h5>    
+                    </div>
+                    <div class='row px-3 py-2 border city'>
+                        <h5 class='font-weight-light'> San Francisco </h5>
+                    </div>
+                    <div class='row px-3 py-2 border city'>
+                        <h5 class='font-weight-light'> Seattle </h5>      
+                    </div>
+                    <div class='row px-3 py-2 border city'>
+                        <h5 class='font-weight-light'> Denver </h5>         
+                    </div>
+                    <div class='row px-3 py-2 border city'>
+                        <h5 class='font-weight-light'> Atlanta </h5>            
+                    </div>
                 </div>
-                <div class='col-lg-8 col-sm-12 col-xs-12 mx-auto'>
-                    <div class='row'>
-                        <p></p>
+
+                <div class='col-lg-8 px-2 py-2 bg-warning border'>
+                    <div class="container border">
+                        <h3> Atlanta (8/15/2019) </h3>
+                        <hr>
+
+                        <h6> Temperature </h6>
+                        <h6> Humidity </h6>
+                        <h6> Wind Speed </h6>
+                        <h6> UV Index </h6>
                     </div>
 
+                    <div class='container px-2 py-2 border'>
+                        <h4> 5-Day Forecast </h4>
+                        <br>
+
+                        <div class = 'row px-3 py-2'> 
+                            <div class='col-lg-2 border'>
+                            <p> Date </p>
+                            <p> Temp </p>
+                            <p> Humidity </p>
+                            </div>
+                            <div class='col-lg-2 border'>
+                                <p> Date </p>
+                                <p> Temp </p>
+                                <p> Humidity </p>
+                            </div>
+                            <div class='col-lg-2 border'>
+                                <p> Date </p>
+                                <p> Temp </p>
+                                <p> Humidity </p>
+                            </div>
+                            <div class='col-lg-2 border'>
+                                    <p> Date </p>
+                                    <p> Temp </p>
+                                    <p> Humidity </p>
+                            </div>
+                            <div class='col-lg-2 border'>
+                                <p> Date </p>
+                                <p> Temp </p>
+                                <p> Humidity </p>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
+
+                
+
+                
             </div>
+            
         </div>
     
 </body>
