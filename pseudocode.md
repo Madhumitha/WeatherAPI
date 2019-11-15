@@ -5,7 +5,9 @@ Conditions: First constructing website for desktop
 1.  Include Navbar for Weather Dashboard
         (Use Bootstrap for navbar)
 
-2. Include a right section for displaying the following under current weather conditions 
+2.  Design Template
+
+3. Include a right section for displaying the following under current weather conditions 
         - City
         - Date 
         - Icon image
@@ -16,12 +18,12 @@ Conditions: First constructing website for desktop
 
         Idea: Create function for current conditions - currentCondition()
 
-3. Include a search history so that users can access their past search terms.
+4. Include a search history so that users can access their past search terms.
         - Clicking on the city name should perform a new search that returns current and future conditions for that city.
 
          Idea: Create function for search history - searchHistory()
 
-4. Include a 5-day forecast below the current weather conditions. Each day for the 5-day forecast should display the following:
+5. Include a 5-day forecast below the current weather conditions. Each day for the 5-day forecast should display the following:
         - Date
         - Icon image 
         - Temperature
