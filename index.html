@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Weather Dashboard</title>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type='text/javascript' src='scripts/script.js'></script>
+    
+
     <link ref='stylesheet' href='/assets/style.css'/>
 
     <link
@@ -27,6 +31,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 </head>
 <body>
         <nav class="navbar navbar-dark bg-dark text-white">
@@ -70,15 +75,18 @@
                     </div>
                 </div>
 
-                <div class='col-lg-8 px-2 py-2 bg-warning border'>
+                <div class='col-lg-8 px-2 py-2 border'>
                     <div class="container border">
-                        <h3> Atlanta (8/15/2019) </h3>
+                        <h3 id='city'> </h3>
+                        <img id='wIcon' src='' alt='Weather Icon'>
+
                         <hr>
 
-                        <h6> Temperature </h6>
-                        <h6> Humidity </h6>
-                        <h6> Wind Speed </h6>
-                        <h6> UV Index </h6>
+                        <p id="temp"> </p>
+                        
+                        <p id="humid"></p>
+                        <p id="wind">  </p>
+                        <p id="UV">  </p>
                     </div>
 
                     <div class='container px-2 py-2 border'>
@@ -86,27 +94,27 @@
                         <br>
 
                         <div class = 'row px-3 py-2'> 
-                            <div class='col-lg-2 border'>
+                            <div class='bg-primary col-lg-2 border'>
                             <p> Date </p>
                             <p> Temp </p>
                             <p> Humidity </p>
                             </div>
-                            <div class='col-lg-2 border'>
+                            <div class='bg-primary  col-lg-2 border'>
                                 <p> Date </p>
                                 <p> Temp </p>
                                 <p> Humidity </p>
                             </div>
-                            <div class='col-lg-2 border'>
+                            <div class='bg-primary  col-lg-2 border'>
                                 <p> Date </p>
                                 <p> Temp </p>
                                 <p> Humidity </p>
                             </div>
-                            <div class='col-lg-2 border'>
+                            <div class='bg-primary  col-lg-2 border'>
                                     <p> Date </p>
                                     <p> Temp </p>
                                     <p> Humidity </p>
                             </div>
-                            <div class='col-lg-2 border'>
+                            <div class='bg-primary  col-lg-2 border'>
                                 <p> Date </p>
                                 <p> Temp </p>
                                 <p> Humidity </p>
