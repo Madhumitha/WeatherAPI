@@ -2,127 +2,142 @@
 
 // Current Condition
 
-function currentCondition() {
+$(document).ready(function(){ 
 
-    let queryURL = "http://api.openweathermap.org/data/2.5/forecast?id=4724129&APPID=23dc5f87ddf3af5418217e5f3640466c&units=imperial";
+    function currentCondition() {
+
+        let queryURL = "http://api.openweathermap.org/data/2.5/forecast?id=4724129&APPID=23dc5f87ddf3af5418217e5f3640466c&units=imperial";
+        
+        $.getJSON(queryURL, function(data){
+            updateDOM(data);
+        });
+    }
+
+    currentCondition();
+
+    function UVdata() {
+
+        let uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=23dc5f87ddf3af5418217e5f3640466c&lat=30.5083&lon=-97.679"
+
+        $.getJSON(uvURL, function(UV_data){
+            updateUV(UV_data);
+        });
+    }
+
+    UVdata();
+
+    function updateDOM(data) {
+
+        let cityName = data.city.name;
+        let iconCode = data.list[0].weather[0].icon;
+        let iconURL = "http://openweathermap.org/img/w/" + iconCode + '.png';
+        let temp = Math.round(data.list[0].main.temp);
+        let timeNow = data.list[0].dt_txt.substring(0, 10);
+        let showHumid = data.list[0].main.humidity;
+        let showWind = data.list[0].wind.speed;
+
+        $('#city').text(cityName + " (" + timeNow + ')');
+        $('#wIcon').attr('src', iconURL);
+        $('#temp').text("Temperature : " + temp + String.fromCharCode(176) + " F");
+        $('#humid').text('Humidity: ' + showHumid +  "%");
+        $('#wind').text('Wind Speed: ' + showWind + 'MPH');
+    }
+
+    function updateUV(UV_data) {
+
+        let showUV = UV_data.value;
+
+        $('#UV').text("UV Index: " + showUV);
+    }
+
+
+    // 5-Day Forecast 
+
+    function fiveDayForecast() {
+        
+        let dayForecastURL = "http://api.openweathermap.org/data/2.5/forecast?appid=23dc5f87ddf3af5418217e5f3640466c&id=4724129&count=10&units=imperial";
+
+        $.getJSON(dayForecastURL, function(fiveDaydata){
+
+            updateForecast(fiveDaydata);
+        });
+    }
+
+    fiveDayForecast();
+
     
-    $.getJSON(queryURL, function(data){
-        updateDOM(data);
-    });
-}
 
-currentCondition();
+    for (let i =0; i < 5;i++) {
 
-function UVdata() {
+    }
 
-    let uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=23dc5f87ddf3af5418217e5f3640466c&lat=30.5083&lon=-97.679"
+    function udpateData(fiveDayData, i, count) {
+        let day = fiveDayData.list[i].dt_txt.substring(0,10);
+        let dayIcon = fiveDayData.list[i].weather[0].icon;
+        let iconURL = "http://openweathermap.org/img/w/" + dayIcon + '.png';
+        let temp = Math.round(fiveDayData.list[i].main.temp);
+        let humid = fiveDayData.list[i].main.humidity;
 
-    $.getJSON(uvURL, function(UV_data){
-        console.log(UV_data)            //For testing 
-        console.log(UV_data.value);     // For testing
-        updateUV(UV_data);
-    });
-}
+        $('#day'+count).text(day);
+        $('#wIcon'+count).attr('src', iconURL);
+        $('#temp'+count).text("Temp : " + temp + String.fromCharCode(176) + " F");
+        $('#humid'+count).text('Humidity:' + humid +  "%");
+    }
 
-UVdata();
+    function updateForecast(fiveDaydata) {
 
-function updateDOM(data) {
+        let size = fiveDaydata.list.length;
+        let count = 1;
+        let currDay = fiveDaydata.list[0].dt_txt.substring(0,10);
 
-    let cityName = data.city.name;
-    let iconCode = data.list[0].weather[0].icon;
-    let iconURL = "http://openweathermap.org/img/w/" + iconCode + '.png';
-    let temp = Math.round(data.list[0].main.temp);
-    let timeNow = moment().format('L');
-    let showHumid = data.list[0].main.humidity;
-    let showWind = data.list[0].wind.speed;
+        for (let i = 1 ; i < size; i++) {
+            let day = fiveDaydata.list[i].dt_txt.substring(0,10);
+            console.log(day);
+            if (currDay != day) {
+                //console.log("Invoke a diff date "+ currDay, day);
+                udpateData(fiveDaydata, i, count);
+                currDay = day;
+                count++;
+            } 
+            /*else {
+                console.log("current day and day equal "+ currDay, day);
+            }*/
+        }
+    }
 
-    $('#city').text(cityName + " (" + timeNow + ')');
-    $('#wIcon').attr('src', iconURL);
-    $('#temp').text("Temperature : " + temp + String.fromCharCode(176) + " F");
-    $('#humid').text('Humidity: ' + showHumid +  "%");
-    $('#wind').text('Wind Speed: ' + showWind + 'MPH');
-}
+    // Search for a city
 
-function updateUV(UV_data) {
+    function searchHistory() {
 
-    let showUV = UV_data.value;
+     $('#searchButton').on('click', function(event) {
 
-    $('#UV').text("UV Index: " + showUV);
-}
+      event.preventDefault();
 
+      let quest = $("#runSearch").val().trim();
 
-// 5-Day Forecast 
+      console.log(quest);
 
-function fiveDayForecast() {
+      let searchURL = "http://api.openweathermap.org/data/2.5/weather?APPID=23dc5f87ddf3af5418217e5f3640466c&units=imperial&q=" + quest;
+
+      $.getJSON(searchURL, function(searchData){
+        console.log(searchData);          //For testing 
+               
+        updateSearch(searchData);
+        }); 
+            
+     })
+        
+        
     
-    let dayForecastURL = "http://api.openweathermap.org/data/2.5/forecast?appid=23dc5f87ddf3af5418217e5f3640466c&id=4724129&count=10&units=imperial";
+  }
 
-    $.getJSON(dayForecastURL, function(fiveDaydata){
-        //Testing
-        console.log(fiveDaydata);
-        console.log(fiveDaydata.list[1].weather[0].icon)
+ searchHistory();
 
-        updateForecast(fiveDaydata);
-    });
-}
-
-fiveDayForecast();
-
-function updateForecast(fiveDaydata) {
-
-    let day1 = fiveDaydata.list[1].dt_txt.substring(0, 10);
-    let icon1Code = fiveDaydata.list[1].weather[0].icon;
-    let icon1URL = "http://openweathermap.org/img/w/" + icon1Code + '.png';
-    let temp1 = Math.round(fiveDaydata.list[1].main.temp);
-    let humid1 = fiveDaydata.list[1].main.humidity;
-
-    $('#day1').text(day1);
-    $('#wIcon1').attr('src', icon1URL);
-    $('#temp1').text("Temp : " + temp1 + String.fromCharCode(176) + " F");
-    $('#humid1').text('Humidity:' + humid1 +  "%");
+    // Click Handlers
 
 
-    let day2 = fiveDaydata.list[9].dt_txt.substring(0, 10);
-    let icon2Code = fiveDaydata.list[9].weather[0].icon;
-    let icon2URL = "http://openweathermap.org/img/w/" + icon2Code + '.png';
-    let temp2 = Math.round(fiveDaydata.list[9].main.temp);
-    let humid2 = fiveDaydata.list[9].main.humidity;
+    function updateSearch(searchData) {
 
-    $('#day2').text(day2);
-    $('#wIcon2').attr('src', icon2URL);
-    $('#temp2').text("Temp : " + temp2 + String.fromCharCode(176) + " F");
-    $('#humid2').text('Humidity:' + humid2 +  "%");
+    }
 
-    let day3 = fiveDaydata.list[17].dt_txt.substring(0, 10);
-    let icon3Code = fiveDaydata.list[17].weather[0].icon;
-    let icon3URL = "http://openweathermap.org/img/w/" + icon2Code + '.png';
-    let temp3 = Math.round(fiveDaydata.list[17].main.temp);
-    let humid3 = fiveDaydata.list[17].main.humidity;
-
-    $('#day3').text(day3);
-    $('#wIcon3').attr('src', icon3URL);
-    $('#temp3').text("Temp : " + temp3 + String.fromCharCode(176) + " F");
-    $('#humid3').text('Humidity:' + humid3 +  "%");
-
-    let day4 = fiveDaydata.list[25].dt_txt.substring(0, 10);
-    let icon4Code = fiveDaydata.list[25].weather[0].icon;
-    let icon4URL = "http://openweathermap.org/img/w/" + icon2Code + '.png';
-    let temp4 = Math.round(fiveDaydata.list[25].main.temp);
-    let humid4 = fiveDaydata.list[25].main.humidity;
-
-    $('#day4').text(day4);
-    $('#wIcon4').attr('src', icon4URL);
-    $('#temp4').text("Temp : " + temp4 + String.fromCharCode(176) + " F");
-    $('#humid4').text('Humidity:' + humid4 +  "%");
-
-    let day5 = fiveDaydata.list[32].dt_txt.substring(0, 10);
-    let icon5Code = fiveDaydata.list[32].weather[0].icon;
-    let icon5URL = "http://openweathermap.org/img/w/" + icon2Code + '.png';
-    let temp5 = Math.round(fiveDaydata.list[32].main.temp);
-    let humid5 = fiveDaydata.list[32].main.humidity;
-
-    $('#day5').text(day5);
-    $('#wIcon5').attr('src', icon5URL);
-    $('#temp5').text("Temp : " + temp5 + String.fromCharCode(176) + " F");
-    $('#humid5').text('Humidity:' + humid5 +  "%");
-}
+});

@@ -34,17 +34,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 </head>
 <body>
-        <nav class="navbar navbar-dark bg-dark text-white">
-            <h1 class="text-center"> Weather Dashboard </h1>
-        </nav>
 
+    <div class="jumbotron bg-dark text-white">
+            <h1 class="text-center"> Weather Dashboard </h1>
+    </div>
+        
         <div class='container-fluid'>
             <div class='row border'> 
-                <div id='#search' class='col-lg-4 bg-light border'>
-                    <h5> Search for a City: </h5>
-                    <form class="example" action="action_page.php">
-                        <input type="text" name="Search">
-                        <button id='searchButton' type="submit"><i class="fa fa-search"></i></button>
+                <div class='col-lg-4 bg-light border'>
+                    <br>
+                    <h4> Search for a City : </h4>
+                    <br>
+                    <form role="form">
+                        <div class="form-group">
+                            <input id="runSearch" type="text">
+                            <button id='searchButton' type="submit" class="btn btn-primary">
+                                    <i class="fa fa-search"></i>  </button>
+                        </div>                        
                     </form>
 
                     <br>
