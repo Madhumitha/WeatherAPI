@@ -5,7 +5,6 @@
 $(document).ready(function(){ 
 
     function currentCondition() {
-
         let queryURL = "http://api.openweathermap.org/data/2.5/forecast?id=4724129&APPID=23dc5f87ddf3af5418217e5f3640466c&units=imperial";
         
         $.getJSON(queryURL, function(data){
@@ -16,7 +15,6 @@ $(document).ready(function(){
     currentCondition();
 
     function UVdata() {
-
         let uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=23dc5f87ddf3af5418217e5f3640466c&lat=30.5083&lon=-97.679"
 
         $.getJSON(uvURL, function(UV_data){
@@ -65,12 +63,6 @@ $(document).ready(function(){
 
     fiveDayForecast();
 
-    
-
-    for (let i =0; i < 5;i++) {
-
-    }
-
     function udpateData(fiveDayData, i, count) {
         let day = fiveDayData.list[i].dt_txt.substring(0,10);
         let dayIcon = fiveDayData.list[i].weather[0].icon;
@@ -92,7 +84,7 @@ $(document).ready(function(){
 
         for (let i = 1 ; i < size; i++) {
             let day = fiveDaydata.list[i].dt_txt.substring(0,10);
-            console.log(day);
+            //console.log(day);
             if (currDay != day) {
                 //console.log("Invoke a diff date "+ currDay, day);
                 udpateData(fiveDaydata, i, count);
@@ -110,34 +102,25 @@ $(document).ready(function(){
     function searchHistory() {
 
      $('#searchButton').on('click', function(event) {
-
       event.preventDefault();
-
       let quest = $("#runSearch").val().trim();
-
-      console.log(quest);
-
       let searchURL = "http://api.openweathermap.org/data/2.5/weather?APPID=23dc5f87ddf3af5418217e5f3640466c&units=imperial&q=" + quest;
-
+    
       $.getJSON(searchURL, function(searchData){
         console.log(searchData);          //For testing 
-               
+        console.log(quest);
+        console.log(searchURL);        
         updateSearch(searchData);
-        }); 
-            
+        });      
      })
-        
-        
-    
-  }
-
- searchHistory();
-
-    // Click Handlers
-
-
-    function updateSearch(searchData) {
-
     }
 
+    searchHistory();
+
+    function updateSearch(searchData) {
+        let cityId = searchData.id;
+        console.log(cityId);
+        updateDOM(searchData);
+        updateForecast(searchData);
+    }
 });
