@@ -96,11 +96,11 @@ $(document).ready(function(){
      $('#searchButton').on('click', function(event) {
       event.preventDefault();
       let quest = $("#runSearch").val().trim(); 
-      cityHistory(quest);
+      cityHistory(quest, null);
      })
     }
 
-    function cityHistory(cityName) {
+    function cityHistory(cityName, store) {
         let searchURL = "http://api.openweathermap.org/data/2.5/forecast?APPID=23dc5f87ddf3af5418217e5f3640466c&units=imperial&q=" + cityName;
       
         $.getJSON(searchURL, function(searchData){
@@ -115,7 +115,7 @@ $(document).ready(function(){
             currentCondition(cityId);
             UVdata(latitude, longitude);
             fiveDayForecast(cityId);
-            saveToStorage(cityName, cityId);
+            saveToStorage(cityName, cityId, store);
             displayData();
             //console.log(localStorage.getItem("Austin"));
             }); 
@@ -130,9 +130,9 @@ $(document).ready(function(){
 
     // Save to Local Storage
 
-     function saveToStorage(cityName, cityId) {
+     function saveToStorage(cityName, cityId, store) {
         let len = localStorage.length;
-        if (len >= 8 ){
+        if (len >= 8 && store === null){
             console.log("Hey");
             localStorage.removeItem(localStorage.key(7));
         }
@@ -154,7 +154,7 @@ $(document).ready(function(){
             $('#city' + i).text(localStorage.key(i));
             $('#city' + i).on('click', function(event){
                 console.log("City clicked : "+ localStorage.key(i));
-                cityHistory(localStorage.key(i));
+                cityHistory(localStorage.key(i), true);
             })
 
         }
