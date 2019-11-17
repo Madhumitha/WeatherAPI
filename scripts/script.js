@@ -96,24 +96,69 @@ $(document).ready(function(){
      $('#searchButton').on('click', function(event) {
       event.preventDefault();
       let quest = $("#runSearch").val().trim(); 
-      let searchURL = "http://api.openweathermap.org/data/2.5/forecast?APPID=23dc5f87ddf3af5418217e5f3640466c&units=imperial&q=" + quest;
-      
-      $.getJSON(searchURL, function(searchData){
-        console.log(searchData);          //For testing 
-        console.log(quest);
-        console.log(searchURL);
-
-        let cityId = searchData.city.id;
-        let latitude = searchData.city.coord.lat;
-        let longitude = searchData.city.coord.lon;
-
-        currentCondition(cityId);
-        UVdata(latitude, longitude);
-        fiveDayForecast(cityId);
-        }); 
+      cityHistory(quest);
      })
     }
 
+    function cityHistory(cityName) {
+        let searchURL = "http://api.openweathermap.org/data/2.5/forecast?APPID=23dc5f87ddf3af5418217e5f3640466c&units=imperial&q=" + cityName;
+      
+        $.getJSON(searchURL, function(searchData){
+            console.log(searchData);          //For testing 
+            console.log(cityName);
+            console.log(searchURL);
+
+            let cityId = searchData.city.id;
+            let latitude = searchData.city.coord.lat;
+            let longitude = searchData.city.coord.lon;
+
+            currentCondition(cityId);
+            UVdata(latitude, longitude);
+            fiveDayForecast(cityId);
+            saveToStorage(cityName, cityId);
+            displayData();
+            //console.log(localStorage.getItem("Austin"));
+            }); 
+
+    }
+
+    // Function Call for search history
     searchHistory();
+
+    //Function Call 
+    displayData();
+
+    // Save to Local Storage
+
+     function saveToStorage(cityName, cityId) {
+        let len = localStorage.length;
+        if (len >= 8 ){
+            console.log("Hey");
+            localStorage.removeItem(localStorage.key(7));
+        }
+        len = localStorage.length;
+        if(len < 8) {
+            if(localStorage.getItem(cityName) === null) {
+                localStorage.setItem(cityName, cityId);
+            }
+        }  
+
+    }
+
+    // Display the data
+
+    function displayData() {
+
+        for(let i = 0; i < localStorage.length; i++) {
+            
+            $('#city' + i).text(localStorage.key(i));
+            $('#city' + i).on('click', function(event){
+                console.log("City clicked : "+ localStorage.key(i));
+                cityHistory(localStorage.key(i));
+            })
+
+        }
+
+    }
 
 });
