@@ -5,7 +5,7 @@
 $(document).ready(function(){ 
 
     function currentCondition(cityId) {
-        let queryURL = "http://api.openweathermap.org/data/2.5/forecast?id=" + cityId + "&APPID=23dc5f87ddf3af5418217e5f3640466c&units=imperial";
+        let queryURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + cityId + "&APPID=23dc5f87ddf3af5418217e5f3640466c&units=imperial";
         
         $.getJSON(queryURL, function(data){
             updateDOM(data);
@@ -13,7 +13,7 @@ $(document).ready(function(){
     }
 
     function UVdata(lat, lon) {
-        let uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=23dc5f87ddf3af5418217e5f3640466c&lat=" + lat+ "&lon=" + lon;
+        let uvURL = "https://api.openweathermap.org/data/2.5/uvi?appid=23dc5f87ddf3af5418217e5f3640466c&lat=" + lat+ "&lon=" + lon;
 
         $.getJSON(uvURL, function(UV_data){
             updateUV(UV_data);
@@ -23,7 +23,7 @@ $(document).ready(function(){
     function updateDOM(data) {
         let cityName = data.city.name;
         let iconCode = data.list[0].weather[0].icon;
-        let iconURL = "http://openweathermap.org/img/w/" + iconCode + '.png';
+        let iconURL = "https://openweathermap.org/img/w/" + iconCode + '.png';
         let temp = Math.round(data.list[0].main.temp);
         let timeNow = data.list[0].dt_txt.substring(0, 10);
         let showHumid = data.list[0].main.humidity;
@@ -49,7 +49,7 @@ $(document).ready(function(){
     // 5-Day Forecast 
 
     function fiveDayForecast(cityId) {
-        let dayForecastURL = "http://api.openweathermap.org/data/2.5/forecast?appid=23dc5f87ddf3af5418217e5f3640466c&id=" + cityId + "&count=10&units=imperial";
+        let dayForecastURL = "https://api.openweathermap.org/data/2.5/forecast?appid=23dc5f87ddf3af5418217e5f3640466c&id=" + cityId + "&count=10&units=imperial";
 
         $.getJSON(dayForecastURL, function(fiveDaydata){
             updateForecast(fiveDaydata);
@@ -59,7 +59,7 @@ $(document).ready(function(){
     function udpateData(fiveDayData, i, count) {
         let day = fiveDayData.list[i].dt_txt.substring(0,10);
         let dayIcon = fiveDayData.list[i].weather[0].icon;
-        let iconURL = "http://openweathermap.org/img/w/" + dayIcon + '.png';
+        let iconURL = "https://openweathermap.org/img/w/" + dayIcon + '.png';
         let temp = Math.round(fiveDayData.list[i].main.temp);
         let humid = fiveDayData.list[i].main.humidity;
 
@@ -101,7 +101,7 @@ $(document).ready(function(){
     }
 
     function cityHistory(cityName, store) {
-        let searchURL = "http://api.openweathermap.org/data/2.5/forecast?APPID=23dc5f87ddf3af5418217e5f3640466c&units=imperial&q=" + cityName;
+        let searchURL = "https://api.openweathermap.org/data/2.5/forecast?APPID=23dc5f87ddf3af5418217e5f3640466c&units=imperial&q=" + cityName;
       
         $.getJSON(searchURL, function(searchData){
             console.log(searchData);          //For testing 
